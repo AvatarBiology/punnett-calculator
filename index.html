@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式 Punnett 方格計算器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>互動式 Punnett 方格計算器</h1>
+
+        <div class="input-section">
+            <h2>輸入親代基因型</h2>
+            <div class="parent-inputs">
+                <div class="input-group">
+                    <label for="parent1">親代 1 基因型:</label>
+                    <input type="text" id="parent1" placeholder="例: Aa, IAi, XAXa, AaBb...">
+                    <div id="parent1-normalized" class="normalized-preview"></div>
+                </div>
+                <div class="input-group">
+                    <label for="parent2">親代 2 基因型:</label>
+                    <input type="text" id="parent2" placeholder="例: Aa, ii, XaY, AaBb...">
+                    <div id="parent2-normalized" class="normalized-preview"></div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="inheritance-pattern">遺傳模式:</label>
+                <select id="inheritance-pattern">
+                    <option value="complete">完全顯性 (例: Aa)</option>
+                    <option value="incomplete">不完全顯性 (例: RR x WW -> RW)</option>
+                    <option value="codominance">共顯性 (例: IAIA x IBIB -> IAIB, 或 RW)</option>
+                    <option value="x-linked">X-連鎖 (例: XAXa x XaY)</option>
+                    <option value="y-linked">Y-連鎖 (例: XX x XYA)</option>
+                    <option value="two-genes-independent">雙基因獨立分配 (例: AaBb)</option>
+                    <option value="polygenic">多基因遺傳 (例: AaBbCc)</option>
+                </select>
+                <div id="x-linked-hint" class="pattern-hint" style="display: none;">輸入格式: XAXA, XAXa, XaXa (女), XAY, XaY (男)。大小寫敏感。</div>
+                <div id="codominance-hint" class="pattern-hint" style="display: none;">ABO血型輸入: IAIA, IAi, IBIB, IBi, IAIB, ii。一般共顯性: RR, RW, WW。</div>
+            </div>
+
+             <!-- 多基因對數輸入 -->
+             <div id="polygenic-options" class="input-group" style="display: none;">
+                 <label for="num-genes">基因對數:</label>
+                 <input type="number" id="num-genes" min="1" max="4" value="2"> <!-- Limit max for performance -->
+                 <small>(1-4 對。例: 人類膚色深淺)</small>
+            </div>
+
+             <!-- 表現型定義區 -->
+            <div id="phenotype-definition" class="phenotype-definition" style="display: none;">
+                 <h4>定義表現型 (選填)</h4>
+                 <div id="phenotype-inputs">
+                     <!-- JS generates inputs here -->
+                 </div>
+            </div>
+
+            <button id="calculate-btn">計算 Punnett 方格</button>
+        </div>
+
+        <div id="results-area" class="results-section" style="display: none;">
+            <h2>計算結果</h2>
+            <div id="error-message" class="error" style="display: none;"></div>
+
+            <div class="result-block">
+                <h3>Punnett 方格</h3>
+                <div id="punnett-square-container">
+                    <!-- Punnett Square generated here -->
+                </div>
+            </div>
+
+            <div class="result-block">
+                <h3>子代基因型比例</h3>
+                <ul id="genotype-ratios">
+                    <!-- Genotype Ratios generated here -->
+                </ul>
+            </div>
+
+            <div class="result-block">
+                <h3>子代表現型比例</h3>
+                <ul id="phenotype-ratios">
+                    <!-- Phenotype Ratios generated here -->
+                </ul>
+            </div>
+
+            <div class="result-block">
+                 <h3>示意家譜圖 (P -> F1)</h3>
+                 <div id="pedigree-chart-container">
+                     <!-- Pedigree Chart generated here -->
+                 </div>
+            </div>
+
+            <!-- ======================== -->
+            <!-- ==   儀表板開始   == -->
+            <!-- ======================== -->
+            <div id="dashboard-section" class="result-block dashboard" style="display: none;"> <!-- Initially hidden -->
+                <h3>結果儀表板</h3>
+                <div class="dashboard-summary">
+                    <span>基因型種類: <strong id="summary-genotype-count">0</strong> 種</span>
+                    <span>表現型種類: <strong id="summary-phenotype-count">0</strong> 種</span>
+                    <span>表現型比例 (最簡): <strong id="summary-phenotype-ratio">-</strong></span>
+                </div>
+                <div class="dashboard-charts">
+                    <!-- Genotype Chart -->
+                    <div class="chart-container">
+                        <h4>基因型分佈</h4>
+                         <div class="chart-wrapper">
+                             <div class="y-axis" id="genotype-y-axis">
+                                 <!-- Y labels for genotype chart -->
+                             </div>
+                             <div id="genotype-chart" class="chart-area">
+                                 <!-- Genotype chart bars will be generated here -->
+                             </div>
+                         </div>
+                    </div>
+                    <!-- Phenotype Chart -->
+                    <div class="chart-container">
+                        <h4>表現型分佈</h4>
+                         <div class="chart-wrapper">
+                            <div class="y-axis" id="phenotype-y-axis">
+                                <!-- Y labels for phenotype chart -->
+                            </div>
+                             <div id="phenotype-chart" class="chart-area">
+                                 <!-- Phenotype chart bars will be generated here -->
+                             </div>
+                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ======================== -->
+            <!-- ==    儀表板結束   == -->
+            <!-- ======================== -->
+
+        </div> <!-- Closing results-area -->
+    </div> <!-- Closing container -->
+
+    <script src="script.js"></script>
+</body>
+</html>

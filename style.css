@@ -1,0 +1,457 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    max-width: 95%; /* Allow wider container for large tables */
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Prevent content spilling out */
+}
+
+h1, h2, h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+}
+h1 { text-align: center; margin-bottom: 30px; }
+h2 { border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+h3 { color: #3498db; margin-top: 20px; }
+
+.input-section, .results-section {
+    margin-bottom: 30px;
+}
+
+.parent-inputs {
+    display: flex;
+    flex-wrap: wrap; /* Allow inputs to wrap on smaller screens */
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    flex: 1 1 200px; /* Allow flex-grow, flex-shrink, base width */
+    min-width: 250px; /* Ensure minimum width before wrapping */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-group input[type="text"],
+.input-group input[type="number"],
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.normalized-preview {
+    font-size: 0.85em;
+    color: #777;
+    height: 1.2em; /* Reserve space */
+    margin-top: 4px;
+    font-style: italic;
+}
+
+.pattern-hint {
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 5px;
+    background-color: #f0f0f0;
+    padding: 5px 8px;
+    border-radius: 3px;
+}
+
+button#calculate-btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Add some space above button */
+}
+
+button#calculate-btn:hover {
+    background-color: #2980b9;
+}
+
+.results-section {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.result-block {
+    margin-bottom: 25px;
+}
+
+#error-message {
+    color: #fff; /* White text */
+    background-color: #e74c3c; /* Red background */
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding: 10px 15px; /* Add padding */
+    border-radius: 4px; /* Rounded corners */
+    display: none; /* Initially hidden */
+}
+
+/* --- Punnett Square Styles --- */
+#punnett-square-container {
+    overflow-x: auto; /* Handle large squares */
+    margin-top: 10px;
+    max-width: 100%; /* Fit container width */
+}
+
+.punnett-table {
+    border-collapse: collapse;
+    margin: 10px auto; /* Center table if smaller than container */
+    border: 2px solid #2c3e50;
+    font-size: 12px; /* Smaller font for large tables */
+}
+
+.punnett-table th, .punnett-table td {
+    border: 1px solid #bdc3c7;
+    padding: 6px 8px; /* Reduced padding */
+    text-align: center;
+    min-width: 45px; /* Adjusted min-width */
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.punnett-table th { /* Gamete headers */
+    background-color: #dde4e6; /* Slightly different header color */
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.punnett-table td.genotype-cell { /* Offspring genotypes */
+    background-color: #fff; /* Default background */
+    color: #222; /* Ensure text visibility */
+}
+
+.punnett-table th.empty-cell { /* Top-left empty cell */
+    background-color: transparent; /* Make it transparent */
+    border: none;
+}
+
+/* --- Ratio List Styles --- */
+#genotype-ratios li, #phenotype-ratios li {
+    list-style: none;
+    padding: 8px 12px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border-left: 5px solid #3498db; /* Default border */
+    background-color: #fff; /* Add white background */
+}
+
+/* --- Ratio Color Coding --- */
+.ratio-high { background-color: #d4efdf; border-left-color: #2ecc71; } /* Greenish */
+.ratio-medium { background-color: #fcf3cf; border-left-color: #f1c40f; } /* Yellowish */
+.ratio-low { background-color: #fdebd0; border-left-color: #e67e22; } /* Orangish */
+.ratio-very-low { background-color: #fadbd8; border-left-color: #e74c3c; } /* Reddish */
+
+.ratio-value {
+    font-weight: bold;
+    margin-left: 10px;
+    min-width: 50px;
+    display: inline-block;
+}
+
+/* --- Phenotype Definition --- */
+.phenotype-definition {
+    border: 1px dashed #ccc;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+.phenotype-definition h4 { margin-top: 0; color: #555; }
+.phenotype-definition > span { /* Style the intro text */
+    display: block;
+    margin-bottom: 10px;
+    font-style: italic;
+    color: #444;
+}
+.phenotype-input-group { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.phenotype-input-group label { font-weight: normal; min-width: 120px; text-align: right; } /* Adjust width */
+.phenotype-input-group input { flex-grow: 1; padding: 5px 8px;}
+
+/* --- Pedigree Chart Styles --- */
+#pedigree-chart-container {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 14px;
+    overflow-x: auto; /* Allow horizontal scroll for many offspring */
+}
+
+.pedigree-level {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align tops for varying text height */
+    gap: 30px;
+    position: relative;
+    min-width: fit-content; /* Allow level to expand horizontally */
+}
+
+.pedigree-level.offspring {
+    flex-wrap: nowrap; /* Prevent wrapping, rely on horizontal scroll */
+}
+
+.pedigree-individual {
+    display: inline-block;
+    text-align: center;
+    min-width: 80px; /* Give some space for text */
+}
+
+.pedigree-symbol {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 5px auto;
+    font-size: 12px;
+    font-weight: bold;
+    overflow: hidden;
+    background-color: #fff; /* Ensure default background */
+    color: #333; /* Ensure text is visible */
+    position: relative; /* Needed for potential indicators */
+}
+
+.pedigree-symbol.male { border-radius: 0; }
+.pedigree-symbol.female { border-radius: 50%; }
+.pedigree-symbol.unknown { border-style: dashed; }
+
+.pedigree-genotype {
+    font-style: italic;
+    color: #555;
+    font-size: 0.9em;
+    word-wrap: break-word; /* Allow long genotypes to wrap if needed */
+}
+.pedigree-phenotype {
+    font-weight: bold;
+    font-size: 0.9em;
+     word-wrap: break-word;
+}
+
+/* --- Basic connector lines --- */
+.pedigree-connectors {
+    text-align: center;
+    height: 20px; /* Space for lines */
+    position: relative;
+}
+.pedigree-level.parents::after { /* Line between parents */
+    content: '';
+    position: absolute;
+    top: 20px; /* Position relative to parent symbols */
+    left: 50%;
+    transform: translateX(-50%); /* Center the line */
+    width: 30px; /* Width of the marriage line */
+    height: 2px;
+    background-color: #333;
+}
+.pedigree-connectors::before { /* Line down from marriage line */
+     content: '';
+     position: absolute;
+     top: -2px; /* Connect to the marriage line */
+     left: 50%;
+     transform: translateX(-50%);
+     width: 2px;
+     height: 22px; /* Length of the vertical line */
+     background-color: #333;
+ }
+
+ /* --- Polygenic Options Style --- */
+ #polygenic-options small {
+     display: block;
+     font-size: 0.9em;
+     color: #555;
+     margin-top: 4px;
+ }
+
+/* --- Phenotype Color Coding (16 colors) --- */
+.pheno-color-1 { background-color: #e0f7fa; } .pheno-color-2 { background-color: #fff9c4; }
+.pheno-color-3 { background-color: #ffe0b2; } .pheno-color-4 { background-color: #dcedc8; }
+.pheno-color-5 { background-color: #f8bbd0; } .pheno-color-6 { background-color: #d1c4e9; }
+.pheno-color-7 { background-color: #cfd8dc; } .pheno-color-8 { background-color: #ffccbc; }
+.pheno-color-9 { background-color: #c8e6c9; } .pheno-color-10 { background-color: #b3e5fc; }
+.pheno-color-11 { background-color: #f0f4c3; } .pheno-color-12 { background-color: #ffecb3; }
+.pheno-color-13 { background-color: #d7ccc8; } .pheno-color-14 { background-color: #ffcdd2; }
+.pheno-color-15 { background-color: #e1bee7; } .pheno-color-16 { background-color: #c5cae9; }
+
+/* --- Dashboard Styles --- */
+.dashboard {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 2px dashed #3498db; /* Separator */
+}
+
+.dashboard h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+.dashboard-summary {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 15px;
+    background-color: #e9f6ff; /* Light blue background */
+    border-radius: 6px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.dashboard-summary span {
+    font-size: 1.1em;
+    color: #333;
+}
+
+.dashboard-summary strong {
+    color: #2980b9; /* Darker blue for values */
+    margin-left: 5px;
+}
+
+.dashboard-charts {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Wrap charts on smaller screens */
+    gap: 30px;
+}
+
+.chart-container {
+    flex: 1; /* Each chart takes up equal space */
+    min-width: 300px; /* Minimum width before wrapping */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    text-align: center; /* Center the title */
+}
+
+.chart-container h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #34495e;
+    font-size: 1.1em;
+}
+
+/* New wrapper for axis and chart area */
+.chart-wrapper {
+    display: flex;
+    align-items: stretch; /* Make axis and area same height */
+    /* Increased height slightly to give labels more space */
+    height: 220px;
+}
+
+.y-axis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute labels vertically */
+    align-items: flex-end; /* Align text to the right */
+    padding-right: 8px; /* Space between axis labels and chart */
+    height: 100%; /* Match chart-wrapper height */
+    font-size: 10px;
+    color: #555;
+    width: 35px; /* Fixed width for labels (adjust as needed) */
+    flex-shrink: 0; /* Prevent shrinking */
+    box-sizing: border-box; /* Include padding in width */
+    /* Add bottom padding to align 0% with bottom of chart */
+    padding-bottom: 18px; /* Adjust this value to match label height + margin */
+}
+
+.y-axis span {
+    display: block;
+    line-height: 1; /* Prevent extra spacing */
+}
+
+.chart-area {
+    display: flex;
+    align-items: flex-end; /* Bars grow from bottom */
+    gap: 5px; /* Space between bars */
+    height: 100%; /* Take full height from wrapper */
+    flex-grow: 1; /* Let chart area take remaining space */
+    background-color: #f9f9f9;
+    padding: 0 5px; /* Remove top/bottom padding, keep side */
+    overflow-x: auto; /* Allow horizontal scroll if many bars */
+    overflow-y: hidden;
+    border-left: 1px solid #ddd; /* Line between axis and chart */
+    border-bottom: 1px solid #ddd; /* Add X-axis line */
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Wrapper for each bar + label */
+.bar-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack bar THEN label */
+    align-items: center; /* Center bar horizontally */
+    height: 100%;
+    justify-content: flex-end; /* Align content (bar+label) to bottom */
+    flex: 0 0 auto; /* Prevent shrinking/growing */
+    min-width: 30px;
+    padding: 0 2px;
+    box-sizing: border-box;
+}
+
+.bar {
+    display: block;
+    background-color: #3498db; /* Default bar color */
+    width: 80%; /* Bar width relative to wrapper */
+    max-width: 40px;
+    min-height: 1px; /* Ensure visibility */
+    border-radius: 3px 3px 0 0; /* Rounded top */
+    transition: background-color 0.2s ease, transform 0.2s ease, height 0.2s ease;
+    cursor: default;
+    margin-bottom: 0; /* Ensure bar touches bottom (label handles spacing) */
+}
+
+.bar:hover {
+    background-color: #2980b9;
+    transform: scaleY(1.03);
+    transform-origin: bottom;
+}
+
+/* Style for the X-axis label */
+.bar-label {
+    font-size: 11px; /* Slightly smaller */
+    color: #555;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 95%; /* Allow label to use most of wrapper width */
+    margin-top: 4px; /* Space between bar and label */
+    /* Removed rotation and fixed width */
+    box-sizing: border-box;
+    /* Ensure label sits below the bar */
+}
+
+/* Specific color for phenotype bars */
+.pheno-bar { background-color: #e74c3c; }
+.pheno-bar:hover { background-color: #c0392b; }
