@@ -16,14 +16,36 @@ body {
     overflow: hidden; /* Prevent content spilling out */
 }
 
-h1, h2, h3 {
+/* --- Header Styles --- */
+.header-section {
+    text-align: center; /* <<< 新增: 讓內部的 h1 和 h5 文字置中 */
+    margin-bottom: 30px; /* <<< 新增: 整個標題區塊下方的間距 */
+}
+
+.header-section h1 {
+    color: #2c3e50; /* 保留顏色 */
+    margin-bottom: 5px; /* <<< 修改: 減少 h1 和 h5 之間的預設間距 */
+    /* text-align: center; (從這裡移除，由 .header-section 控制) */
+}
+
+.header-section h5 {
+    margin-top: 0; /* <<< 新增: 移除 h5 頂部的預設間距 */
+    font-size: 0.9em; /* <<< 新增: 讓版權文字稍小一點 */
+    color: #666; /* <<< 新增: 設定稍淺的顏色 */
+    font-weight: normal; /* <<< 新增: 移除粗體 (如果 h5 預設是粗體) */
+    margin-bottom: 0; /* <<< 新增: 移除 h5 下方的預設間距 */
+}
+
+/* --- General Heading Styles (保留 h2, h3 的基礎樣式) --- */
+h2, h3 { /* 從這裡移除了 h1 */
     color: #2c3e50;
     margin-bottom: 15px;
 }
-h1 { text-align: center; margin-bottom: 30px; }
+/* 移除了 h1 { text-align: center; margin-bottom: 30px; } */
 h2 { border-bottom: 2px solid #3498db; padding-bottom: 5px; }
 h3 { color: #3498db; margin-top: 20px; }
 
+/* --- Input/Results Sections (以下保持不變) --- */
 .input-section, .results-section {
     margin-bottom: 30px;
 }

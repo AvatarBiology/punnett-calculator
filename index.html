@@ -8,7 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>互動式 Punnett 方格計算器</h1>
+        <!-- Header Section -->
+        <div class="header-section">
+            <h1>互動式 Punnett 方格計算器</h1>
+            <h5>Avatar Biology 阿凡達生物 ©2025</h5>
+        </div>
+        <!-- End Header Section -->
 
         <div class="input-section">
             <h2>輸入親代基因型</h2>
@@ -28,13 +33,13 @@
             <div class="input-group">
                 <label for="inheritance-pattern">遺傳模式:</label>
                 <select id="inheritance-pattern">
-                    <option value="complete">完全顯性遺傳 (單性狀，例: Aa)</option>
+                    <option value="complete">完全顯性遺傳 (單性狀雜交/分離律，例: Aa x Aa)</option>
                     <option value="incomplete">不完全顯性遺傳 (例: RR x WW -> RW)</option>
-                    <option value="codominance">共顯性遺傳 (例: IAIA x IBIB -> IAIB, 或 RW)</option>
+                    <option value="codominance">共顯性遺傳 (例: IAIA x IBIB -> IAIB, ABO血型)</option>
                     <option value="x-linked">X-性聯遺傳 (例: XAXa x XaY)</option>
                     <option value="y-linked">Y-性聯遺傳 (例: XX x XYA)</option>
-                    <option value="two-genes-independent">雙性狀獨立分配 (例: AaBb)</option>
-                    <option value="polygenic">多基因遺傳 (例: AaBbCc)</option>
+                    <option value="two-genes-independent">雙性狀雜交/獨立分配律 (例: YyRr x YyRr)</option>
+                    <option value="polygenic">多基因遺傳 (例: AaBbCc x AaBbCc, 膚色)</option>
                 </select>
                 <div id="x-linked-hint" class="pattern-hint" style="display: none;">輸入格式: XAXA, XAXa, XaXa (女), XAY, XaY (男)。大小寫敏感。</div>
                 <div id="codominance-hint" class="pattern-hint" style="display: none;">ABO血型輸入: IAIA, IAi, IBIB, IBi, IAIB, ii。一般共顯性: RR, RW, WW。</div>
